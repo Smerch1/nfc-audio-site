@@ -4,5 +4,11 @@
     "title": "Стоны",
     "cover": "assets/images/minon.png",
     "audio": "assets/audio/stoni-1.mp3"
+  },
+  {
+    "id": "sound2",
+    "title": "Владимирский централ",
+    "cover": "assets/images/ca5964b40fc6e19eab36478a37847e5f.jpg",
+    "audio": "assets/audio/vladimirskii-tsentral.mp3"
   }
 ]
