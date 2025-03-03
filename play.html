@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Воспроизведение звука</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="player-container">
+    <!-- Обложка и название будут подгружены динамически -->
+    <img id="playerCover" class="cover-large" alt="Обложка звука">
+    <h2 id="playerTitle"></h2>
+  </div>
+  
+  <script>
+    // Получаем параметр id из URL
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+    const soundId = getQueryParam('id');
+
+    // Загружаем JSON с данными о звуках
+    fetch('assets/sounds.json')
+      .then(response => response.json())
+      .then(data => {
+        // Находим звук по id
+        const sound = data.find(s => s.id === soundId);
+        if (sound) {
+          document.getElementById('playerCover').src = sound.cover;
+          document.getElementById('playerCover').alt = sound.title;
+          document.getElementById('playerTitle').textContent = sound.title;
+          
+          // Создаём аудио-элемент и запускаем воспроизведение
+          const audio = new Audio(sound.audio);
+          audio.play().catch(error => console.error('Ошибка воспроизведения:', error));
+        } else {
+          document.getElementById('playerTitle').textContent = 'Звук не найден';
+        }
+      })
+      .catch(error => console.error('Ошибка загрузки данных:', error));
+  </script>
+</body>
+</html>
