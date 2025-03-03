@@ -4,17 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Каталог звуков - Автозвук</title>
+  <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
-    }
-    .header {
-      text-align: center;
-      padding: 20px;
-    }
+    /* Дополнительные стили для каталога */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -27,63 +19,57 @@
       overflow: hidden;
       transition: transform 0.3s;
       cursor: pointer;
+      text-align: center;
+      padding: 10px;
     }
     .sound-card:hover {
       transform: scale(1.05);
     }
     .sound-card img {
-      width: 100%;
-      height: auto;
-      display: block;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;  /* Круглая обложка */
+      object-fit: cover;
+      margin: 0 auto;
     }
     .sound-card p {
-      margin: 10px;
-      text-align: center;
+      margin: 10px 0 0;
       font-weight: bold;
     }
-    .back-button {
+    .add-button {
       display: block;
       width: max-content;
       margin: 20px auto;
       padding: 10px 20px;
-      background-color: #1f1f1f;
-      color: #e0e0e0;
+      background-color: #4fc3f7;
+      color: #121212;
       text-decoration: none;
       border-radius: 4px;
       transition: background-color 0.3s;
     }
-    .back-button:hover {
-      background-color: #333;
-    }
-    .animate-fade {
-      opacity: 0;
-      animation: fadeIn 1s forwards;
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    .add-button:hover {
+      background-color: #80d8ff;
     }
   </style>
 </head>
 <body>
-  <div class="header animate-fade">
+  <header class="animate-fade">
     <h1>Каталог звуков</h1>
-  </div>
+  </header>
   <div class="grid">
-    <!-- Пример звуковых карточек -->
-    <div class="sound-card animate-fade" style="animation-delay: 0.2s;" onclick="location.href='sound.html?sound=sound1.mp3'">
-      <img src="cover1.jpg" alt="Обложка звука 1">
+    <!-- Пример существующих звуковых карточек -->
+    <div class="sound-card animate-fade" style="animation-delay: 0.2s;" onclick="location.href='sound.html?sound=uploads/sounds/sound1.mp3&cover=uploads/covers/cover1.png&title=Звук 1'">
+      <img src="uploads/covers/cover1.png" alt="Обложка звука 1">
       <p>Звук 1</p>
     </div>
-    <div class="sound-card animate-fade" style="animation-delay: 0.4s;" onclick="location.href='sound.html?sound=sound2.mp3'">
-      <img src="cover2.jpg" alt="Обложка звука 2">
+    <div class="sound-card animate-fade" style="animation-delay: 0.4s;" onclick="location.href='sound.html?sound=uploads/sounds/sound2.mp3&cover=uploads/covers/cover2.png&title=Звук 2'">
+      <img src="uploads/covers/cover2.png" alt="Обложка звука 2">
       <p>Звук 2</p>
     </div>
-    <div class="sound-card animate-fade" style="animation-delay: 0.6s;" onclick="location.href='sound.html?sound=sound3.mp3'">
-      <img src="cover3.jpg" alt="Обложка звука 3">
-      <p>Звук 3</p>
-    </div>
-    <!-- Добавьте дополнительные карточки по необходимости -->
+    <!-- Дополнительные карточки можно динамически подгружать -->
   </div>
+  <!-- Кнопка "Добавить" для загрузки нового звука -->
+  <a class="add-button animate-fade" style="animation-delay: 0.6s;" href="upload.html">Добавить звук</a>
   <a class="back-button animate-fade" style="animation-delay: 0.8s;" href="index.html">На главную</a>
 </body>
 </html>
