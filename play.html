@@ -14,7 +14,7 @@
   </div>
   
   <script>
-    // Получаем параметр id из URL
+    // Функция для получения параметра из URL
     function getQueryParam(param) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(param);
@@ -32,14 +32,23 @@
           document.getElementById('playerCover').alt = sound.title;
           document.getElementById('playerTitle').textContent = sound.title;
           
-          // Создаём аудио-элемент и запускаем воспроизведение
+          // Создаём аудио-элемент и пытаемся запустить воспроизведение
           const audio = new Audio(sound.audio);
-          audio.play().catch(error => console.error('Ошибка воспроизведения:', error));
+          // Попытка автозапуска сразу после загрузки
+          audio.play().catch(error => {
+            console.log("Автовоспроизведение заблокировано, нажмите на экран для запуска", error);
+            // Добавляем обработчик клика для запуска звука при первом взаимодействии
+            document.addEventListener("click", function() {
+              audio.play();
+            }, { once: true });
+          });
         } else {
           document.getElementById('playerTitle').textContent = 'Звук не найден';
         }
       })
       .catch(error => console.error('Ошибка загрузки данных:', error));
   </script>
+  
+  <p style="text-align:center; color:#e0e0e0;">Нажмите на экран, если звук не воспроизводится автоматически.</p>
 </body>
 </html>
