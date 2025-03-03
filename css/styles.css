@@ -1,0 +1,101 @@
+/* Основные стили */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+}
+
+/* Заголовки и кнопки */
+.header {
+  text-align: center;
+  padding: 20px;
+  background-color: #1f1f1f;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  animation: fadeIn 1s ease-out;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #6200ee;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #7e3ff2;
+}
+
+/* Контент */
+.main-content, .catalog, .player-container {
+  padding: 20px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Футер */
+.footer {
+  text-align: center;
+  padding: 10px;
+  font-size: 0.8em;
+  background-color: #1f1f1f;
+  margin-top: 20px;
+}
+
+/* Каталог карточек */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  width: 150px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* Круглая обложка для каталога */
+.cover {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.cover:hover {
+  transform: scale(1.1);
+}
+
+/* Обложка для страницы воспроизведения */
+.cover-large {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Дополнительные анимационные эффекты можно добавить по желанию */
