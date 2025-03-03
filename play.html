@@ -5,39 +5,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Воспроизведение звука</title>
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Центрирование контейнера с обложкой и названием */
+    .player-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* Центрирование по вертикали */
+      text-align: center;
+    }
+    
+    .cover-large {
+      width: 200px; /* Можно менять размер */
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%; /* Обрезка в круг */
+    }
+
+    #playerTitle {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #e0e0e0;
+    }
+
+    p {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
   <div class="player-container">
-    <!-- Обложка и название будут подгружены динамически -->
     <img id="playerCover" class="cover-large" alt="Обложка звука">
     <h2 id="playerTitle"></h2>
   </div>
-  
+
   <script>
-    // Функция для получения параметра из URL
     function getQueryParam(param) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(param);
     }
     const soundId = getQueryParam('id');
 
-    // Загружаем JSON с данными о звуках
     fetch('assets/sounds.json')
       .then(response => response.json())
       .then(data => {
-        // Находим звук по id
         const sound = data.find(s => s.id === soundId);
         if (sound) {
           document.getElementById('playerCover').src = sound.cover;
           document.getElementById('playerCover').alt = sound.title;
           document.getElementById('playerTitle').textContent = sound.title;
-          
-          // Создаём аудио-элемент и пытаемся запустить воспроизведение
+
           const audio = new Audio(sound.audio);
-          // Попытка автозапуска сразу после загрузки
           audio.play().catch(error => {
             console.log("Автовоспроизведение заблокировано, нажмите на экран для запуска", error);
-            // Добавляем обработчик клика для запуска звука при первом взаимодействии
             document.addEventListener("click", function() {
               audio.play();
             }, { once: true });
@@ -48,7 +74,7 @@
       })
       .catch(error => console.error('Ошибка загрузки данных:', error));
   </script>
-  
-  <p style="text-align:center; color:#e0e0e0;">Нажмите на экран, если звук не воспроизводится автоматически.</p>
+
+  <p>Нажмите на экран, если звук не воспроизводится автоматически.</p>
 </body>
 </html>
