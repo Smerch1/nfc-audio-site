@@ -1,0 +1,8 @@
+[
+  {
+    "id": "sound1",
+    "title": "Стоны",
+    "cover": "assets/images/rain.jpg",
+    "audio": "assets/audio/rain.mp3"
+  },
+]
