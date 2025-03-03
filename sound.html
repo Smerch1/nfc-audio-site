@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Воспроизведение звука - Автозвук</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    .back-button {
+      display: block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .back-button:hover {
+      background-color: #333;
+    }
+    .animate-fade {
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1 class="animate-fade">Воспроизведение звука</h1>
+  <!-- Аудиоэлемент (без видимых контролов) -->
+  <audio id="sound" style="display: none;"></audio>
+  <p class="animate-fade" style="animation-delay: 0.5s;">Если звук не воспроизводится автоматически, нажмите на экран.</p>
+  <a class="back-button animate-fade" style="animation-delay: 0.8s;" href="catalog.html">Вернуться в каталог</a>
+
+  <script>
+    // Функция для получения GET-параметра
+    function getQueryParam(param) {
+      let params = new URLSearchParams(window.location.search);
+      return params.get(param);
+    }
+    // Определяем, какой звуковой файл воспроизводить
+    let soundFile = getQueryParam('sound') || 'sound.mp3'; // значение по умолчанию
+
+    let audio = document.getElementById('sound');
+    audio.src = soundFile;
+
+    // Автозапуск после клика
+    document.addEventListener("click", function() {
+      audio.play();
+    }, { once: true });
+
+    // Попытка автозапуска при загрузке
+    document.addEventListener("DOMContentLoaded", function() {
+      audio.play().catch(err => console.log("Автовоспроизведение заблокировано"));
+    });
+  </script>
+</body>
+</html>
