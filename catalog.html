@@ -2,74 +2,58 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Каталог звуков - Автозвук</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <style>
-    /* Дополнительные стили для каталога */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-    .sound-card {
-      background-color: #1f1f1f;
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.3s;
-      cursor: pointer;
-      text-align: center;
-      padding: 10px;
-    }
-    .sound-card:hover {
-      transform: scale(1.05);
-    }
-    .sound-card img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;  /* Круглая обложка */
-      object-fit: cover;
-      margin: 0 auto;
-    }
-    .sound-card p {
-      margin: 10px 0 0;
-      font-weight: bold;
-    }
-    .add-button {
-      display: block;
-      width: max-content;
-      margin: 20px auto;
-      padding: 10px 20px;
-      background-color: #4fc3f7;
-      color: #121212;
-      text-decoration: none;
-      border-radius: 4px;
-      transition: background-color 0.3s;
-    }
-    .add-button:hover {
-      background-color: #80d8ff;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Каталог звуков</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header class="animate-fade">
+  <header class="header">
     <h1>Каталог звуков</h1>
+    <a class="btn back" href="index.html">На главную</a>
   </header>
-  <div class="grid">
-    <!-- Пример существующих звуковых карточек -->
-    <div class="sound-card animate-fade" style="animation-delay: 0.2s;" onclick="location.href='sound.html?sound=uploads/sounds/sound1.mp3&cover=uploads/covers/cover1.png&title=Звук 1'">
-      <img src="uploads/covers/cover1.png" alt="Обложка звука 1">
-      <p>Звук 1</p>
-    </div>
-    <div class="sound-card animate-fade" style="animation-delay: 0.4s;" onclick="location.href='sound.html?sound=uploads/sounds/sound2.mp3&cover=uploads/covers/cover2.png&title=Звук 2'">
-      <img src="uploads/covers/cover2.png" alt="Обложка звука 2">
-      <p>Звук 2</p>
-    </div>
-    <!-- Дополнительные карточки можно динамически подгружать -->
-  </div>
-  <!-- Кнопка "Добавить" для загрузки нового звука -->
-  <a class="add-button animate-fade" style="animation-delay: 0.6s;" href="upload.html">Добавить звук</a>
-  <a class="back-button animate-fade" style="animation-delay: 0.8s;" href="index.html">На главную</a>
+  
+  <main class="catalog">
+    <!-- Карточки звуков будут подгружены из JSON -->
+    <div id="soundCards" class="cards-container"></div>
+  </main>
+  
+  <footer class="footer">
+    <p>Автор не несёт ответственности за использование контента.</p>
+  </footer>
+  
+  <script src="js/main.js"></script>
+  <script>
+    // Загрузка данных из sounds.json и формирование карточек
+    fetch('assets/sounds.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('soundCards');
+        data.forEach(sound => {
+          // Создание карточки
+          const card = document.createElement('div');
+          card.className = 'card';
+          
+          // Обложка с эффектом обрезки по кругу
+          const cover = document.createElement('img');
+          cover.src = sound.cover;
+          cover.alt = sound.title;
+          cover.className = 'cover';
+          // По клику перенаправляем на страницу воспроизведения с id звука в параметре URL
+          cover.addEventListener('click', () => {
+            window.location.href = `play.html?id=${sound.id}`;
+          });
+          
+          // Название звука
+          const title = document.createElement('p');
+          title.className = 'sound-title';
+          title.textContent = sound.title;
+          
+          card.appendChild(cover);
+          card.appendChild(title);
+          container.appendChild(card);
+        });
+      })
+      .catch(error => console.error('Ошибка загрузки данных:', error));
+  </script>
 </body>
 </html>
