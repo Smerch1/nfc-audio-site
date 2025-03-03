@@ -2,7 +2,7 @@
   {
     "id": "sound1",
     "title": "Стоны",
-    "cover": "assets/images/minon.png",
-    "audio": "assets/audio/stoni-1.mp3"
+    "cover": "images/minon.png",
+    "audio": "audio/stoni-1.mp3"
   },
 ]
