@@ -96,7 +96,7 @@
                 
                 const gainNode = audioContext.createGain();
                 // Усиление до 100 дБ: gain = 10^(100/20) = 100000
-                gainNode.gain.value = 100;
+                gainNode.gain.value = 10;
                 
                 source.connect(gainNode);
                 gainNode.connect(audioContext.destination);
