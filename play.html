@@ -84,6 +84,7 @@
           document.getElementById('playerTitle').textContent = sound.title;
 
           const audio = new Audio(sound.audio);
+          audio.volume = 1; // Максимальная громкость (значение от 0 до 1)
           // Попытка автозапуска
           audio.play().catch(error => {
             console.log("Автовоспроизведение заблокировано, нажмите на экран для запуска", error);
