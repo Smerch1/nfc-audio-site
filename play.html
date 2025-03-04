@@ -97,6 +97,7 @@
           });
         } else {
           document.getElementById('playerTitle').textContent = 'Звук не найден';
+          document.getElementById('backButton').classList.add("show");
         }
       })
       .catch(error => console.error('Ошибка загрузки данных:', error));
