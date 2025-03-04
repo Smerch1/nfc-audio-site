@@ -38,7 +38,7 @@
       text-align: center;
       color: #888;
     }
-
+    
     /* Стили для кнопки возврата */
     .back-btn {
       display: none; /* Изначально скрыта */
@@ -51,8 +51,8 @@
       opacity: 0;
       transition: opacity 0.5s ease;
     }
-
-    /* Класс для анимации появления */
+    
+    /* При добавлении класса show кнопка появляется */
     .back-btn.show {
       display: inline-block;
       opacity: 1;
@@ -63,7 +63,7 @@
   <div class="player-container">
     <img id="playerCover" class="cover-large" alt="Обложка звука">
     <h2 id="playerTitle"></h2>
-    <!-- Кнопка возврата, появляющаяся после завершения аудио -->
+    <!-- Кнопка возврата, появляющаяся после окончания аудио -->
     <a id="backButton" class="back-btn" href="catalog.html">Вернуться в каталог</a>
   </div>
 
@@ -91,6 +91,17 @@
               audio.play();
             }, { once: true });
           });
-          
-          // После завершения аудио показываем кнопку возврата с анимацией
-          aud
+          // По окончании воспроизведения показываем кнопку возврата
+          audio.addEventListener("ended", function() {
+            document.getElementById('backButton').classList.add("show");
+          });
+        } else {
+          document.getElementById('playerTitle').textContent = 'Звук не найден';
+        }
+      })
+      .catch(error => console.error('Ошибка загрузки данных:', error));
+  </script>
+
+  <p>Нажмите на экран, если звук не воспроизводится автоматически.</p>
+</body>
+</html>
