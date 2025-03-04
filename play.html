@@ -12,16 +12,16 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      height: 100vh; /* Центрирование по вертикали */
       text-align: center;
       position: relative;
     }
     
     .cover-large {
-      width: 200px;
+      width: 200px; /* Можно менять размер */
       height: 200px;
       object-fit: cover;
-      border-radius: 50%;
+      border-radius: 50%; /* Обрезка в круг */
     }
 
     #playerTitle {
@@ -41,7 +41,7 @@
     
     /* Стили для кнопки возврата */
     .back-btn {
-      display: none;
+      display: none; /* Изначально скрыта */
       margin-top: 30px;
       padding: 10px 20px;
       background-color: #6200ee;
@@ -52,6 +52,7 @@
       transition: opacity 0.5s ease;
     }
     
+    /* При добавлении класса show кнопка появляется */
     .back-btn.show {
       display: inline-block;
       opacity: 1;
@@ -81,40 +82,18 @@
           document.getElementById('playerCover').src = sound.cover;
           document.getElementById('playerCover').alt = sound.title;
           document.getElementById('playerTitle').textContent = sound.title;
-          
-          // Используем Web Audio API для воспроизведения с усилением звука до 100 дБ
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          const audioContext = new AudioContext();
-          
-          function playSoundWithGain() {
-            fetch(sound.audio)
-              .then(res => res.arrayBuffer())
-              .then(buffer => audioContext.decodeAudioData(buffer))
-              .then(decodedData => {
-                const source = audioContext.createBufferSource();
-                source.buffer = decodedData;
-                
-                const gainNode = audioContext.createGain();
-                // Усиление до 100 дБ: gain = 10^(100/20) = 100000
-                gainNode.gain.value = 10;
-                
-                source.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                source.start(0);
-                
-                source.onended = function() {
-                  document.getElementById('backButton').classList.add("show");
-                };
-              })
-              .catch(error => console.error('Ошибка обработки аудио:', error));
-          }
-          
-          // Пытаемся запустить звук сразу. Если автозапуск заблокирован, ждем клика.
-          playSoundWithGain();
-          audioContext.resume().catch(() => {
+
+          const audio = new Audio(sound.audio);
+          // Попытка автозапуска
+          audio.play().catch(error => {
+            console.log("Автовоспроизведение заблокировано, нажмите на экран для запуска", error);
             document.addEventListener("click", function() {
-              audioContext.resume().then(playSoundWithGain);
+              audio.play();
             }, { once: true });
+          });
+          // По окончании воспроизведения показываем кнопку возврата
+          audio.addEventListener("ended", function() {
+            document.getElementById('backButton').classList.add("show");
           });
         } else {
           document.getElementById('playerTitle').textContent = 'Звук не найден';
