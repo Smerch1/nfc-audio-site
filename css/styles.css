@@ -87,6 +87,17 @@ body {
   margin: 0 auto;
 }
 
+/* Яркий стиль для ссылок в секции с информацией */
+.info a {
+  color: #ffffff; /* ярко-белый */
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+.info a:hover {
+  color: #ffcc00; /* например, желтый при наведении */
+}
+
 /* Анимации */
 @keyframes fadeIn {
   from { opacity: 0; }
