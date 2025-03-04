@@ -88,13 +88,13 @@ body {
 }
 
 /* Яркий стиль для ссылок в секции с информацией */
-.info a {
+.info a:not(.btn) {
   color: #ffffff; /* ярко-белый */
   text-decoration: underline;
   transition: color 0.3s;
 }
 
-.info a:hover {
+.info a:not(.btn):hover {
   color: #7e3ff2; /* например, желтый при наведении */
 }
 
