@@ -10,5 +10,11 @@
     "title": "Владимирский централ",
     "cover": "assets/images/ca5964b40fc6e19eab36478a37847e5f.jpg",
     "audio": "assets/audio/vladimirskii-tsentral.mp3"
+  },
+  {
+    "id": "sound3",
+    "title": "Под залупой творог",
+    "cover": "assets/images/d37a8fe54261eb3f8954147fe33c94fd.jpg",
+    "audio": "assets/audio/25135 (mp3cut.net).mp3"
   }
 ]
