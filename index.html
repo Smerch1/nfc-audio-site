@@ -3,26 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Главная - Звуки</title>
+  <title>Воспроизведение звука</title>
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Центрирование контейнера с обложкой и названием */
+    .player-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* Центрирование по вертикали */
+      text-align: center;
+      position: relative;
+    }
+    
+    .cover-large {
+      width: 200px; /* Можно менять размер */
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%; /* Обрезка в круг */
+    }
+
+    #playerTitle {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #e0e0e0;
+    }
+
+    p {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: #888;
+    }
+    
+    /* Стили для кнопки возврата */
+    .back-btn {
+      display: none; /* Изначально скрыта */
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #6200ee;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    /* При добавлении класса show кнопка появляется */
+    .back-btn.show {
+      display: inline-block;
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-  <header class="header">
-    <h1>Добро пожаловать на сайт звуков</h1>
-  </header>
-  
-  <main class="main-content">
-    <section class="info">
-      <p>Здесь можно найти и прослушать разнообразные звуки для релаксации или фонового прослушивания.</p>
-      <p>Связаться со мной: <a href="https://t.me/qul1ux" target="_blank">t.me/qul1ux</a></p>
-      <a class="btn" href="catalog.html">Каталог звуков</a>
-    </section>
-  </main>
-  
-  <footer class="footer">
-    <p>Автор не несёт ответственности за использование контента.</p>
-  </footer>
-  
-  <!-- Дополнительный JS можно подключить здесь -->
+  <div class="player-container">
+    <img id="playerCover" class="cover-large" alt="Обложка звука">
+    <h2 id="playerTitle"></h2>
+    <!-- Кнопка возврата, появляющаяся после окончания аудио -->
+    <a id="backButton" class="back-btn" href="catalog.html">Вернуться в каталог</a>
+  </div>
+
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+    const soundId = getQueryParam('id');
+
+    fetch('assets/sounds.json')
+      .then(response => response.json())
+      .then(data => {
+        const sound = data.find(s => s.id === soundId);
+        if (sound) {
+          document.getElementById('playerCover').src = sound.cover;
+          document.getElementById('playerCover').alt = sound.title;
+          document.getElementById('playerTitle').textContent = sound.title;
+
+          const audio = new Audio(sound.audio);
+          // Попытка автозапуска
+          audio.play().catch(error => {
+            console.log("Автовоспроизведение заблокировано, нажмите на экран для запуска", error);
+            document.addEventListener("click", function() {
+              audio.play();
+            }, { once: true });
+          });
+          // По окончании воспроизведения показываем кнопку возврата
+          audio.addEventListener("ended", function() {
+            document.getElementById('backButton').classList.add("show");
+          });
+        } else {
+          document.getElementById('playerTitle').textContent = 'Звук не найден';
+        }
+      })
+      .catch(error => console.error('Ошибка загрузки данных:', error));
+  </script>
+
+  <p>Нажмите на экран, если звук не воспроизводится автоматически.</p>
 </body>
 </html>
